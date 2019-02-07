@@ -153,6 +153,8 @@ open class LocationRequest: Request  {
 	Terminate request
 	*/
 	open func cancel(_ error: LocationError?) {
+        self.timeoutTimer?.invalidate()
+        self.timeoutTimer = nil
 		guard let locator = self.locator else { return }
 		if locator.remove(self) == true {
 			self.rState = .cancelled(error:error)
